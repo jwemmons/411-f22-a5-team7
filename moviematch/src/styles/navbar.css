@@ -1,0 +1,31 @@
+.navbar-container {
+    width: 100%;
+    max-height: 3rem;
+}
+
+.navbar-content div{
+    display: inline;
+}
+.navbar-content {
+    width: 100%;
+    display: inline-block;
+    margin-top: .2rem;
+}
+
+.appTitle {
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: oblique;
+    margin-left: 5rem;
+}
+
+.loginButton {
+    font-weight: bold;
+    margin-right: 2rem;
+    margin-top: 1rem;
+    float: right;
+}
+
+hr {
+    width: 100%;
+}
