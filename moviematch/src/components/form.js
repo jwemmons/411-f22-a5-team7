@@ -1,11 +1,20 @@
 import '../styles/form.css'
+import GenreForm from './Genres';
+import LengthForm from './Length' ;
+import StreamForm from './Stream';
 
 function Form() {
   return (
     <div className="form-container">
+      
+              <GenreForm></GenreForm>
+              <LengthForm></LengthForm>
+              <StreamForm></StreamForm>
+
       <form>
         <div className='formTitle'>Movie Preferences</div>  
-        <label className='enterGenre'>
+        <br/>
+        <label className=''>
             <input type="text" placeholder='Genre'></input>
         </label><br/>
         <label className=''>
