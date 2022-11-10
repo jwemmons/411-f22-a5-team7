@@ -10,7 +10,7 @@ function Form() {
               <GenreForm></GenreForm>
               <LengthForm></LengthForm>
               <StreamForm></StreamForm>
-
+{/* 
       <form>
         <div className='formTitle'>Movie Preferences</div>  
         <br/>
@@ -25,7 +25,12 @@ function Form() {
         </label> <br/>
         <button className='searchMovie'>SEARCH</button>
       </form>
+  */}
+  
+        <button className='searchMovie'>SEARCH</button>    
+
     </div>
+   
   );
 }
 

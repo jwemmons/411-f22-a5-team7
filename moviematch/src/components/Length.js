@@ -21,7 +21,7 @@ class LengthForm extends React.Component {
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
-                    Length: 
+                    Maximum Movie Length in minutes:  <br></br>
           <label>
             <input type="text" placeholder='Length' value={this.state.value} onChange={this.handleChange} />
           </label>

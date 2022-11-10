@@ -1,18 +1,18 @@
 import React from 'react';
 
   
-  class StreamForm extends React.Component {
+  class GenreCheck extends React.Component {
     constructor(props) {
       super(props);
-      this.state = { Amazon: false, Hulu: false, Netflix: false };
+      this.state = { Action: false, Comedy: false, Horror: false };
   
       this.handleChange = this.handleChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
   
-    getServices() {
+    getGenres() {
       return Object.keys(this.state).filter((key) => {
-        return ["Amazon", "Hulu", "Netflix"].includes(key) && this.state[key];
+        return ["Action", "Comedy", "Horror"].includes(key) && this.state[key];
       });
     }
   
@@ -24,43 +24,43 @@ import React from 'react';
     }
   
     handleSubmit(event) {
-      alert("Streaming Services: " + this.getServices());
+      alert("Genres: " + this.getGenres());
       event.preventDefault();
     }
   
     render() {
       return (
         <form onSubmit={this.handleSubmit}>
-          Streaming Services:
+          Genres:
           <div>
             <label>
-              Amazon Prime
+              Action
               <input
                 type="checkbox"
-                value="Amazon"
-                checked={this.state.Amazon}
+                value="Action"
+                checked={this.state.Action}
                 onChange={this.handleChange}
               />
             </label>
           </div>
           <div>
             <label>
-              Hulu
+              Comedy
               <input
                 type="checkbox"
-                value="Hulu"
-                checked={this.state.Hulu}
+                value="Comedy"
+                checked={this.state.Comedy}
                 onChange={this.handleChange}
               />
             </label>
           </div>
           <div>
             <label>
-              Netflix
+              Horror
               <input
                 type="checkbox"
-                value="Netflix"
-                checked={this.state.Netflix}
+                value="Horror"
+                checked={this.state.Horror}
                 onChange={this.handleChange}
               />
             </label>
@@ -72,4 +72,4 @@ import React from 'react';
       }}
 
 
-      export default StreamForm
+      export default Genre
