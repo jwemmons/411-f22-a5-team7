@@ -17,21 +17,22 @@ function Form() {
 
     try {
 
-      const response = await axios.get("/movie",
-
+      const response = await axios(
       {
-        data: {
-          genre: movieGenre,
-          length: movieLength,
-          maturity: movieMaturity,
-          service: movieService
-        }
+        method: "GET",
+        url: "http://127.0.0.1:4000/movies/get_by_genre",
+        headers: {'Content-Type': 'application/json'},
+        body:JSON.stringify( {
+          "genre": movieGenre
+        })
+      }).then((response) => {
+          console.log(response);
+          const res = response.data
+          setMovieData(res) /* change based on how data is formatted */
+
       })
 
-      console.log(response);
-
-      const res = response.data
-      setMovieData(res) /* change based on how data is formatted */
+      
     }
 
     catch (error) {
@@ -57,10 +58,14 @@ function Form() {
             <label>
               <input type="text" id='inputService' placeholder='Streaming Service'></input>
             </label> 
-            <button className='searchMovie' onClick={() => fetchMovies()}>SEARCH</button>
+            <button className='searchMovie' onClick={() =>  fetchMovies()}>SEARCH</button>
           </div> 
         </div>
         {/* Create New Div element to display movies, parse through data stored in movieData */}
+        {movieData && <div>
+              <p>Movie name: {movieData}</p>
+            </div>
+        }
       </form>
     </div>
   );
