@@ -1,1 +1,2 @@
-# 411-f22-a5-team7
+# MovieMatch
+# Tech Stack: React, Flask
