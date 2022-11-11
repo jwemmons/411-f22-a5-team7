@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from "axios";
 import '../styles/form.css'
 
 function Form() {
 
-  const [movieData, setMovieData] = useState(null);
+  const [movieData, setMovieData] = useState([]);
+  const [movies, Setmovies] = useState([])
 
+  
 
-  async function fetchMovies() {
+  function fetchMovies(e) {
+
+    e.preventDefault();
 
     var movieGenre = document.getElementById("inputGenre").value;
     var movieLength = document.getElementById("inputLength").value;
@@ -15,30 +19,35 @@ function Form() {
     var movieMaturity = document.getElementById("inputMaturity").value;
 
 
-    try {
-
-      const response = await axios(
+    fetch("http://127.0.0.1:4000/movies/get_by_genre",
       {
-        method: "GET",
-        url: "http://127.0.0.1:4000/movies/get_by_genre",
-        headers: {'Content-Type': 'application/json'},
-        body:JSON.stringify( {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
           "genre": movieGenre
         })
-      }).then((response) => {
-          console.log(response);
-          const res = response.data
-          setMovieData(res) /* change based on how data is formatted */
-
+      }).then((response) => response.json())
+      .then((data) => {
+        console.log(data.results)
+        setMovieData(data.results)
+        
+      }).catch ((error) => {
+          console.log(error);
       })
+    }
+    useEffect(() => {
 
+      var movieList = []
       
-    }
-
-    catch (error) {
-      console.log(error);
-    }
-  }
+      for (var i = 0; i < movieData.length; i++) {
+        movieList.push(movieData[i].title)
+      }
+  
+      Setmovies(movieList)
+      
+      console.log(movies)
+    }, [movieData])
+  
 
   return (
     <div className="form-container">
@@ -58,17 +67,18 @@ function Form() {
             <label>
               <input type="text" id='inputService' placeholder='Streaming Service'></input>
             </label> 
-            <button className='searchMovie' onClick={() =>  fetchMovies()}>SEARCH</button>
+            <button className='searchMovie' onClick={(e) =>  fetchMovies(e)}>SEARCH</button>
           </div> 
         </div>
         {/* Create New Div element to display movies, parse through data stored in movieData */}
         {movieData && <div>
-              <p>Movie name: {movieData}</p>
+              <p>Movies:</p>
+              <div className='results'>{movies.join(', ')}</div>
             </div>
         }
       </form>
     </div>
   );
-}
 
+}
 export default Form;

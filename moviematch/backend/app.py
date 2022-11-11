@@ -1,7 +1,10 @@
 from flask import Flask, request
 import requests
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)   
+
 
 def getGenreID(genre): 
     r = requests.get("https://api.themoviedb.org/3/genre/movie/list?api_key=af670971ce22ac2581c336c416ca91aa")
@@ -13,10 +16,10 @@ def getGenreID(genre):
 
     return "Genre not found"
 
-@app.route('/movies/get_by_genre')
+@app.route('/movies/get_by_genre', methods=['POST'])
 def search():
     data = request.get_json()
-    genre = data['genre']
+    genre = data["genre"]
     genreID = getGenreID(genre)
 
     url = "https://api.themoviedb.org/3/discover/movie"
