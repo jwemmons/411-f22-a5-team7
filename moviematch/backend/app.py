@@ -43,20 +43,51 @@ def search():
         url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=af670971ce22ac2581c336c416ca91aa"
 
         details = requests.get(url)
-        det_json = details.json()     
+        det_json = details.json()
+
+        poster_path = "https://image.tmdb.org/t/p/original" + json["results"][i].get("poster_path")     
 
         movie = {
             "title": json["results"][i].get("original_title"),
             "release_date": json["results"][i].get("release_date"),
             "runtime": det_json["runtime"],
             "rating": json["results"][i].get("vote_average"),
-            "poster_path": json["results"][i].get("poster_path")
+            "poster_path": poster_path,
+            "id": json["results"][i].get("id")
         }
 
         response["results"].append(movie)
         i += 1
     return response
 
+@app.route('/<movie_id>/availability')
+def getStreamAvail(movie_id):
+    tmdb_id = f"movie/{str(movie_id)}"
+
+    url = "https://streaming-availability.p.rapidapi.com/get/basic"
+    
+    payload = {
+        "country": "us",
+        "tmdb_id": tmdb_id,
+        "output_language": "en"
+    }
+
+    headers = {
+        "X-RapidAPI-Key": "<INSERT API KEY>",
+        "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com"
+    }
+
+    r = requests.get(url, params=payload, headers=headers)
+    if r.status_code != 200:
+        return {"error": "streaming info not found"}, r.status_code
+    
+    json = r.json()
+
+    response = {"results": []}
+    for platform in json.get("streamingInfo"):
+        response["results"].append(platform)
+
+    return response
 
 app.run(port=4000, debug=True)
 
