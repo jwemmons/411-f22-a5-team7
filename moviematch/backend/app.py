@@ -3,11 +3,13 @@ import requests
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)   
+CORS(app)
+app.config.from_pyfile('config.py')   
 
 
-def getGenreID(genre): 
-    r = requests.get("https://api.themoviedb.org/3/genre/movie/list?api_key=af670971ce22ac2581c336c416ca91aa")
+def getGenreID(genre):
+    key = app.config['TMDB_KEY'] 
+    r = requests.get(f"https://api.themoviedb.org/3/genre/movie/list?api_key={key}")
     json = r.json()
 
     for i in json["genres"]:
@@ -24,7 +26,7 @@ def search():
 
     url = "https://api.themoviedb.org/3/discover/movie"
     payload = {
-        "api_key": "af670971ce22ac2581c336c416ca91aa",
+        "api_key": app.config['TMDB_KEY'] ,
         "language": "en-US",
         "sort_by": "popularity.desc",
         "with_runtime.lte": 200,
@@ -40,7 +42,8 @@ def search():
     i = 0
     while len(response["results"]) < 15:
         movie_id = json["results"][i].get("id")
-        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=af670971ce22ac2581c336c416ca91aa"
+        key = app.config['TMDB_KEY'] 
+        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={key}"
 
         details = requests.get(url)
         det_json = details.json()
@@ -73,7 +76,7 @@ def getStreamAvail(movie_id):
     }
 
     headers = {
-        "X-RapidAPI-Key": "<INSERT API KEY>",
+        "X-RapidAPI-Key": app.config['STREAM_API_KEY'],
         "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com"
     }
 
