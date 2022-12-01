@@ -3,11 +3,13 @@ import requests
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)   
+CORS(app)
+app.config.from_pyfile('config.py')   
 
 
-def getGenreID(genre): 
-    r = requests.get("https://api.themoviedb.org/3/genre/movie/list?api_key=af670971ce22ac2581c336c416ca91aa")
+def getGenreID(genre):
+    key = app.config['TMDB_KEY'] 
+    r = requests.get(f"https://api.themoviedb.org/3/genre/movie/list?api_key={key}")
     json = r.json()
 
     for i in json["genres"]:
@@ -24,7 +26,7 @@ def search():
 
     url = "https://api.themoviedb.org/3/discover/movie"
     payload = {
-        "api_key": "af670971ce22ac2581c336c416ca91aa",
+        "api_key": app.config['TMDB_KEY'] ,
         "language": "en-US",
         "sort_by": "popularity.desc",
         "with_runtime.lte": 200,
@@ -40,7 +42,8 @@ def search():
     i = 0
     while len(response["results"]) < 15:
         movie_id = json["results"][i].get("id")
-        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key=af670971ce22ac2581c336c416ca91aa"
+        key = app.config['TMDB_KEY'] 
+        url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={key}"
 
         details = requests.get(url)
         det_json = details.json()
@@ -62,30 +65,28 @@ def search():
 
 @app.route('/<movie_id>/availability')
 def getStreamAvail(movie_id):
-    tmdb_id = f"movie/{str(movie_id)}"
-
-    url = "https://streaming-availability.p.rapidapi.com/get/basic"
-    
-    payload = {
-        "country": "us",
-        "tmdb_id": tmdb_id,
-        "output_language": "en"
-    }
+    url = f"https://watchmode.p.rapidapi.com/title/movie-{movie_id}/sources/"
 
     headers = {
-        "X-RapidAPI-Key": "<INSERT API KEY>",
-        "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com"
+        "regions": "US",
+        "X-RapidAPI-Key": app.config['STREAM_API_KEY'],
+        "X-RapidAPI-Host": "watchmode.p.rapidapi.com"
     }
 
-    r = requests.get(url, params=payload, headers=headers)
-    if r.status_code != 200:
-        return {"error": "streaming info not found"}, r.status_code
-    
+    r = requests.get(url, headers=headers)
     json = r.json()
 
+    if type(json) is dict:
+        return {"error": "invalid movie id"}, json["statusCode"]
+
     response = {"results": []}
-    for platform in json.get("streamingInfo"):
-        response["results"].append(platform)
+    for i in range(len(json)):
+        platform = {
+            "name": json[i]["name"], 
+            "link": json[i]["web_url"]
+        }
+        if platform not in response["results"]:
+            response["results"].append(platform)
 
     return response
 
