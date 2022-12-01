@@ -65,30 +65,28 @@ def search():
 
 @app.route('/<movie_id>/availability')
 def getStreamAvail(movie_id):
-    tmdb_id = f"movie/{str(movie_id)}"
-
-    url = "https://streaming-availability.p.rapidapi.com/get/basic"
-    
-    payload = {
-        "country": "us",
-        "tmdb_id": tmdb_id,
-        "output_language": "en"
-    }
+    url = f"https://watchmode.p.rapidapi.com/title/movie-{movie_id}/sources/"
 
     headers = {
+        "regions": "US",
         "X-RapidAPI-Key": app.config['STREAM_API_KEY'],
-        "X-RapidAPI-Host": "streaming-availability.p.rapidapi.com"
+        "X-RapidAPI-Host": "watchmode.p.rapidapi.com"
     }
 
-    r = requests.get(url, params=payload, headers=headers)
-    if r.status_code != 200:
-        return {"error": "streaming info not found"}, r.status_code
-    
+    r = requests.get(url, headers=headers)
     json = r.json()
 
+    if type(json) is dict:
+        return {"error": "invalid movie id"}, json["statusCode"]
+
     response = {"results": []}
-    for platform in json.get("streamingInfo"):
-        response["results"].append(platform)
+    for i in range(len(json)):
+        platform = {
+            "name": json[i]["name"], 
+            "link": json[i]["web_url"]
+        }
+        if platform not in response["results"]:
+            response["results"].append(platform)
 
     return response
 
