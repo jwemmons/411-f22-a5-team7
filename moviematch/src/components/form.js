@@ -11,7 +11,7 @@ function Form() {
     var movieList = {}
     
     for (var i = 0; i < movieData.length; i++) {
-      movieList[movieData[i].title] = movieData[i].poster_path
+      movieList[movieData[i].title] = [movieData[i].poster_path, movieData[i].rating]
     }
     Setmovies(movieList)
 
@@ -68,9 +68,10 @@ function Form() {
               <div key={i} className="movieOutput">
                 <div>
                   <div>
-                  <img src={value} alt="movie link"/>
+                  <img src={value[0]} alt="movie link"/>
                   </div>
                   <div>{key}</div>
+                  <div>{value[1]}</div>
                 </div>
               </div>
             )
