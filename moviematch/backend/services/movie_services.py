@@ -42,7 +42,7 @@ def getByGenre(data):
         details = requests.get(url)
         det_json = details.json()
 
-        poster_path = "https://image.tmdb.org/t/p/original" + json["results"][i].get("poster_path")     
+        poster_path = "https://image.tmdb.org/t/p/w200" + json["results"][i].get("poster_path")     
 
         movie = {
             "title": json["results"][i].get("original_title"),

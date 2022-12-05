@@ -4,9 +4,18 @@ import '../styles/form.css'
 function Form() {
 
   const [movieData, setMovieData] = useState([]);
-  const [movies, Setmovies] = useState([])
+  const [movies, Setmovies] = useState({})
 
-  
+  useEffect(() => {
+
+    var movieList = {}
+    
+    for (var i = 0; i < movieData.length; i++) {
+      movieList[movieData[i].title] = movieData[i].poster_path
+    }
+    Setmovies(movieList)
+
+  }, [movieData])
 
   function fetchMovies(e) {
 
@@ -15,10 +24,9 @@ function Form() {
     var movieGenre = document.getElementById("inputGenre").value;
     var movieLength = document.getElementById("inputLength").value;
     var movieService = document.getElementById("inputService").value;
-    var movieMaturity = document.getElementById("inputMaturity").value;
 
 
-    fetch("http://127.0.0.1:4000/movies/get_by_genre",
+    fetch("http://127.0.0.1:5000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -33,20 +41,8 @@ function Form() {
       }).catch ((error) => {
           console.log(error);
       })
+      
     }
-    useEffect(() => {
-
-      var movieList = []
-      
-      for (var i = 0; i < movieData.length; i++) {
-        movieList.push(movieData[i].title)
-      }
-  
-      Setmovies(movieList)
-      
-      console.log(movies)
-    }, [movieData])
-  
 
   return (
     <div className="form-container">
@@ -61,20 +57,25 @@ function Form() {
               <input type="text" id='inputLength' placeholder='Length'></input>
             </label>
             <label>
-              <input type="text" id='inputMaturity' placeholder='Maturity'></input>
-            </label>
-            <label>
               <input type="text" id='inputService' placeholder='Streaming Service'></input>
             </label> 
             <button className='searchMovie' onClick={(e) =>  fetchMovies(e)}>SEARCH</button>
           </div> 
         </div>
         {/* Create New Div element to display movies, parse through data stored in movieData */}
-        {movieData && <div>
-              <p>Movies:</p>
-              <div className='results'>{movies.join(', ')}</div>
-            </div>
-        }
+        <div className='movieGrid'>
+          {movieData && Object.entries(movies).map(([ key, value ], i) => 
+              <div key={i} className="movieOutput">
+                <div>
+                  <div>
+                  <img src={value} alt="movie link"/>
+                  </div>
+                  <div>{key}</div>
+                </div>
+              </div>
+            )
+          }
+        </div>
       </form>
     </div>
   );
