@@ -27,7 +27,7 @@ def getProviderID(provider):
 def getByGenre(data):
     genre = data["genre"]
     runtime = data["runtime"]
-    stream = data["stream"]
+    stream = data["service"]
     genreID = getGenreID(genre)
     providerID = getProviderID(stream)
 
@@ -75,8 +75,23 @@ def getByGenre(data):
 
         watchmode = f"https://watchmode.p.rapidapi.com/title/movie-{movie_id}/sources/"
 
+        wm_headers = {
+            "regions": "US",
+            "X-RapidAPI-Key": stream_api_key,
+            "X-RapidAPI-Host": "watchmode.p.rapidapi.com"
+        }
+
+        wm_r = requests.get(watchmode, headers=wm_headers)
+        wm_json = wm_r.json()
+
+        if type(wm_json) is not dict:
+            for platform in range(len(wm_json)):
+                if stream.casefold() in wm_json[platform]["name"].casefold():
+                    movie["link"] = wm_json[platform]["web_url"]
+
         response["results"].append(movie)
         i += 1
+
     return response
 
 def getStreamAvail(movie_id):
