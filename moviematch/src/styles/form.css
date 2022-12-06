@@ -2,14 +2,14 @@
     justify-content: center;
     align-items: center;
     display: flex;
+
 }
 
-.formTitle{
-    font-size: 1.5rem;
+.formTitle {
+    font-size: 50px;
 }
 
-.form-content{
-}
+.form-content {}
 
 .inputs {
     margin-top: 1rem;
@@ -28,25 +28,28 @@ form {
     margin-left: 2.5rem;
 }
 
-input{
-    margin-bottom: 1rem;
+input {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
     border-radius: 5px;
-    margin-left: 3rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    width: 200px;
+    height: 30px;
 }
 
 .searchMovie {
-    min-width: 5rem;
-    min-height: 1rem;
+    min-width: 10rem;
+    min-height: 2rem;
     margin-top: .2rem;
-    margin-left: 10rem;
+    margin-left: 0rem;
 }
 
 .results {
     font-size: .7rem;
 }
 
-.movieOutput {
-}
+.movieOutput {}
 
 .movieGrid {
     margin: auto;
