@@ -6,14 +6,15 @@
 }
 
 .formTitle {
-    font-size: 50px;
+    font-size: 30px;
 }
 
-.form-content {}
+.form-content {
+
+}
 
 .inputs {
-    margin-top: 1rem;
-
+    margin-top: .5rem;
 }
 
 form {
@@ -41,8 +42,8 @@ input {
 .searchMovie {
     min-width: 10rem;
     min-height: 2rem;
-    margin-top: .2rem;
     margin-left: 0rem;
+    margin-bottom: 3rem;
 }
 
 .results {
