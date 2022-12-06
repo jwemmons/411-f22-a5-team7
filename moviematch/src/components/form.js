@@ -26,12 +26,14 @@ function Form() {
     var movieService = document.getElementById("inputService").value;
 
 
-    fetch("http://127.0.0.1:5000/movies/get_by_genre",
+    fetch("http://127.0.0.1:4000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          "genre": movieGenre
+          "genre": movieGenre,
+          "runtime": movieLength,
+          "service": movieService
         })
       }).then((response) => response.json())
       .then((data) => {
@@ -54,7 +56,7 @@ function Form() {
               <input type="text" id='inputGenre' placeholder='Genre'></input>
             </label>  
             <label>
-              <input type="text" id='inputLength' placeholder='Length'></input>
+              <input type="text" id='inputLength' placeholder='Max Length'></input>
             </label>
             <label>
               <input type="text" id='inputService' placeholder='Streaming Service'></input>
