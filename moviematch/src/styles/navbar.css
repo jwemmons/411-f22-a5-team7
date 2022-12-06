@@ -1,6 +1,6 @@
 .navbar-container {
     width: 100%;
-    max-height: 100px;
+    max-height: 5.5rem;
     background-color: black
 }
 
@@ -11,7 +11,11 @@
 .navbar-content {
     width: 100%;
     display: inline-block;
-    margin-top: 0rem;
+}
+
+.logo {
+    float: left;
+    margin-top: -13px;
 }
 
 .appTitle {
@@ -19,10 +23,12 @@
     font-size: 70px;
     font-weight: 600;
     background-image: linear-gradient(to left, #553c9a, #b393d3);
+    text-align: center;
     color: transparent;
     background-clip: text;
     -webkit-background-clip: text;
-    margin-left: 4rem
+    margin-right: 4rem;
+
 }
 
 .loginButton {
@@ -30,8 +36,4 @@
     margin-right: 2rem;
     margin-top: 2.5rem;
     float: right;
-}
-
-hr {
-    width: 100%;
 }
