@@ -27,7 +27,7 @@ def getProviderID(provider):
 def getByGenre(data):
     genre = data["genre"]
     runtime = data["runtime"]
-    stream = data["stream"]
+    stream = data["service"]
     genreID = getGenreID(genre)
     providerID = getProviderID(stream)
 
