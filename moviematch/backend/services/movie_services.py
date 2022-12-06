@@ -73,6 +73,8 @@ def getByGenre(data):
             "id": json["results"][i].get("id")
         }
 
+        watchmode = f"https://watchmode.p.rapidapi.com/title/movie-{movie_id}/sources/"
+
         response["results"].append(movie)
         i += 1
     return response
