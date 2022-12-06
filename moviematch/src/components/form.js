@@ -33,7 +33,7 @@ function Form() {
         body: JSON.stringify({
           "genre": movieGenre,
           "runtime": movieLength,
-          "stream": movieService
+          "service": movieService
         })
       }).then((response) => response.json())
       .then((data) => {
@@ -56,7 +56,7 @@ function Form() {
               <input type="text" id='inputGenre' placeholder='Genre'></input>
             </label>  
             <label>
-              <input type="text" id='inputLength' placeholder='Length'></input>
+              <input type="text" id='inputLength' placeholder='Max Length'></input>
             </label>
             <label>
               <input type="text" id='inputService' placeholder='Streaming Service'></input>
