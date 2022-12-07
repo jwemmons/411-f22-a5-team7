@@ -73,22 +73,6 @@ def getByGenre(data):
             "id": json["results"][i].get("id")
         }
 
-        watchmode = f"https://watchmode.p.rapidapi.com/title/movie-{movie_id}/sources/"
-
-        wm_headers = {
-            "regions": "US",
-            "X-RapidAPI-Key": stream_api_key,
-            "X-RapidAPI-Host": "watchmode.p.rapidapi.com"
-        }
-
-        wm_r = requests.get(watchmode, headers=wm_headers)
-        wm_json = wm_r.json()
-
-        if type(wm_json) is not dict:
-            for platform in range(len(wm_json)):
-                if stream.casefold() in wm_json[platform]["name"].casefold():
-                    movie["link"] = wm_json[platform]["web_url"]
-
         response["results"].append(movie)
         i += 1
 
@@ -118,4 +102,28 @@ def getStreamAvail(movie_id):
         if platform not in response["results"]:
             response["results"].append(platform)
 
+    return response
+
+def streamRedirect(data):
+    id = data["movie_id"]
+    stream = data["service"]
+    
+    watchmode = f"https://watchmode.p.rapidapi.com/title/movie-{id}/sources/"
+
+    wm_headers = {
+        "regions": "US",
+        "X-RapidAPI-Key": stream_api_key,
+        "X-RapidAPI-Host": "watchmode.p.rapidapi.com"
+    }
+
+    wm_r = requests.get(watchmode, headers=wm_headers)
+    wm_json = wm_r.json()
+
+    response = {"link": ""}
+    if type(wm_json) is not dict:
+        for platform in range(len(wm_json)):
+            if stream.casefold() in wm_json[platform]["name"].casefold():
+                response["link"] = wm_json[platform]["web_url"]
+                break
+    
     return response
