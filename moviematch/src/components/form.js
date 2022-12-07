@@ -11,7 +11,7 @@ function Form() {
     var movieList = {}
 
     for (var i = 0; i < movieData.length; i++) {
-      movieList[movieData[i].title] = [movieData[i].poster_path, movieData[i].rating, movieData[i].runtime]
+      movieList[movieData[i].title] = [movieData[i].poster_path, movieData[i].rating, movieData[i].runtime, movieData[i].id]
     }
     Setmovies(movieList)
 
@@ -25,8 +25,7 @@ function Form() {
     var movieLength = document.getElementById("inputLength").value;
     var movieService = document.getElementById("inputService").value;
 
-
-    fetch("http://127.0.0.1:4000/movies/get_by_genre",
+    fetch("http://127.0.0.1:5000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -39,6 +38,31 @@ function Form() {
       .then((data) => {
         console.log(data.results)
         setMovieData(data.results)
+
+      }).catch((error) => {
+        console.log(error);
+      })
+
+  }
+
+  function redirectMovie(e, movieID) {
+    console.log(movieID)
+
+    var movieService = document.getElementById("inputService").value;
+    var link = ""
+
+    fetch("http://127.0.0.1:5000/stream-redirect",
+      {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          "movie_id": movieID,
+          "service": movieService
+        })
+      }).then((response) => response.json())
+      .then((data) => {
+        console.log(data.link)
+        window.open(data.link);
 
       }).catch((error) => {
         console.log(error);
@@ -73,7 +97,7 @@ function Form() {
             <div key={i} className="movieOutput">
               <div>
                 <div>
-                  <img src={value[0]} alt="movie link" />
+                  <img src={value[0]} alt="movie link" onClick={(e) => redirectMovie(e, value[3])}/>
                 </div>
                 <div>{key}</div>
                 <div>{value[2]} min</div>
