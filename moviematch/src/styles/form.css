@@ -50,7 +50,9 @@ input {
     font-size: .7rem;
 }
 
-.movieOutput {}
+.movieOutput {
+    max-width: 15rem;
+}
 
 .movieGrid {
     margin: auto;
