@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 import '../styles/form.css'
+import Movie from './movieCard.js'
+
 
 function Form() {
 
@@ -25,7 +27,7 @@ function Form() {
     var movieLength = document.getElementById("inputLength").value;
     var movieService = document.getElementById("inputService").value;
 
-    fetch("http://127.0.0.1:5000/movies/get_by_genre",
+    fetch("http://127.0.0.1:4000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -43,32 +45,7 @@ function Form() {
         console.log(error);
       })
 
-  }
-
-  function redirectMovie(e, movieID) {
-    console.log(movieID)
-
-    var movieService = document.getElementById("inputService").value;
-    var link = ""
-
-    fetch("http://127.0.0.1:5000/stream-redirect",
-      {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          "movie_id": movieID,
-          "service": movieService
-        })
-      }).then((response) => response.json())
-      .then((data) => {
-        console.log(data.link)
-        window.open(data.link);
-
-      }).catch((error) => {
-        console.log(error);
-      })
-
-  }
+    }
 
   return (
     <div className="form-container">
@@ -77,13 +54,13 @@ function Form() {
           <div className='formTitle'>Movie Preferences:</div>
           <div className='inputs'>
             <label>
-              <input type="text" id='inputGenre' placeholder='Genre'></input>
+              <input type="text" id='inputGenre' placeholder='Genre (Comedy, Horror..)'></input>
             </label>
             <label>
-              <input type="text" id='inputLength' placeholder='Max Length'></input>
+              <input type="text" id='inputLength' placeholder='Max Length (mins)'></input>
             </label>
             <label>
-              <input type="text" id='inputService' placeholder='Streaming Service'></input>
+              <input type="text" id='inputService' placeholder='Streaming Service (Netflix, Hulu..)'></input>
             </label>
 
           </div>
@@ -95,14 +72,7 @@ function Form() {
         <div className='movieGrid'>
           {movieData && Object.entries(movies).map(([key, value], i) =>
             <div key={i} className="movieOutput">
-              <div>
-                <div>
-                  <img src={value[0]} style={{"cursor": "pointer"}} alt="movie link" onClick={(e) => redirectMovie(e, value[3])}/>
-                </div>
-                <div>{key}</div>
-                <div>{value[2]} min</div>
-                <div>{value[1]}</div>
-              </div>
+              <Movie movieData={[key].concat(value)} ></Movie>
             </div>
           )
           }
