@@ -25,7 +25,7 @@ function Form() {
     var movieLength = document.getElementById("inputLength").value;
     var movieService = document.getElementById("inputService").value;
 
-    fetch("http://127.0.0.1:4000/movies/get_by_genre",
+    fetch("http://127.0.0.1:5000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -51,7 +51,7 @@ function Form() {
     var movieService = document.getElementById("inputService").value;
     var link = ""
 
-    fetch("http://127.0.0.1:4000/stream-redirect",
+    fetch("http://127.0.0.1:5000/stream-redirect",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
@@ -97,7 +97,7 @@ function Form() {
             <div key={i} className="movieOutput">
               <div>
                 <div>
-                  <img src={value[0]} alt="movie link" onClick={(e) => redirectMovie(e, value[3])}/>
+                  <img src={value[0]} style={{"cursor": "pointer"}} alt="movie link" onClick={(e) => redirectMovie(e, value[3])}/>
                 </div>
                 <div>{key}</div>
                 <div>{value[2]} min</div>
