@@ -13,3 +13,9 @@ def search():
 def availability(movie_id):
     response = getStreamAvail(movie_id)
     return response
+
+@bp.route('/stream-redirect', methods=['POST'])
+def streamLink():
+    data = request.get_json()
+    response = streamRedirect(data)
+    return response

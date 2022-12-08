@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "flask": "^0.2.10",
+    "python": "^0.0.4",
+    "react-animated-heart": "^0.0.7"
+  }
+}

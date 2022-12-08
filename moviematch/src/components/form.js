@@ -1,12 +1,23 @@
 import { useEffect, useState } from 'react'
 import '../styles/form.css'
+import Movie from './movieCard.js'
+
 
 function Form() {
 
   const [movieData, setMovieData] = useState([]);
-  const [movies, Setmovies] = useState([])
+  const [movies, Setmovies] = useState({})
 
-  
+  useEffect(() => {
+
+    var movieList = {}
+
+    for (var i = 0; i < movieData.length; i++) {
+      movieList[movieData[i].title] = [movieData[i].poster_path, movieData[i].rating, movieData[i].runtime, movieData[i].id]
+    }
+    Setmovies(movieList)
+
+  }, [movieData])
 
   function fetchMovies(e) {
 
@@ -15,66 +26,57 @@ function Form() {
     var movieGenre = document.getElementById("inputGenre").value;
     var movieLength = document.getElementById("inputLength").value;
     var movieService = document.getElementById("inputService").value;
-    var movieMaturity = document.getElementById("inputMaturity").value;
-
 
     fetch("http://127.0.0.1:4000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          "genre": movieGenre
+          "genre": movieGenre,
+          "runtime": movieLength,
+          "service": movieService
         })
       }).then((response) => response.json())
       .then((data) => {
         console.log(data.results)
         setMovieData(data.results)
-        
-      }).catch ((error) => {
-          console.log(error);
-      })
-    }
-    useEffect(() => {
 
-      var movieList = []
-      
-      for (var i = 0; i < movieData.length; i++) {
-        movieList.push(movieData[i].title)
-      }
-  
-      Setmovies(movieList)
-      
-      console.log(movies)
-    }, [movieData])
-  
+      }).catch((error) => {
+        console.log(error);
+      })
+
+    }
 
   return (
     <div className="form-container">
       <form>
         <div className='form-content'>
-          <div className='formTitle'>Movie Preferences</div> 
+          <div className='formTitle'>Movie Preferences:</div>
           <div className='inputs'>
             <label>
-              <input type="text" id='inputGenre' placeholder='Genre'></input>
-            </label>  
-            <label>
-              <input type="text" id='inputLength' placeholder='Length'></input>
+              <input type="text" id='inputGenre' placeholder='Genre (Comedy, Horror..)'></input>
             </label>
             <label>
-              <input type="text" id='inputMaturity' placeholder='Maturity'></input>
+              <input type="text" id='inputLength' placeholder='Max Length (mins)'></input>
             </label>
             <label>
-              <input type="text" id='inputService' placeholder='Streaming Service'></input>
-            </label> 
-            <button className='searchMovie' onClick={(e) =>  fetchMovies(e)}>SEARCH</button>
-          </div> 
+              <input type="text" id='inputService' placeholder='Streaming Service (Netflix, Hulu..)'></input>
+            </label>
+
+          </div>
+          <div>
+            <button className='searchMovie' onClick={(e) => fetchMovies(e)}>Find your movies!</button>
+          </div>
         </div>
         {/* Create New Div element to display movies, parse through data stored in movieData */}
-        {movieData && <div>
-              <p>Movies:</p>
-              <div className='results'>{movies.join(', ')}</div>
+        <div className='movieGrid'>
+          {movieData && Object.entries(movies).map(([key, value], i) =>
+            <div key={i} className="movieOutput">
+              <Movie movieData={[key].concat(value)} ></Movie>
             </div>
-        }
+          )
+          }
+        </div>
       </form>
     </div>
   );

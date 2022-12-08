@@ -9,24 +9,39 @@ def getGenreID(genre):
     json = r.json()
 
     for i in json["genres"]:
-        if i["name"] == genre:
+        if i["name"].casefold() == genre.casefold():
             return i["id"] 
 
     return "Genre not found"
 
+def getProviderID(provider):
+    r = requests.get(f"https://api.themoviedb.org/3/watch/providers/movie?api_key={tmdb_key}&watch_region=US")
+    r_json = r.json()
+
+    for i in r_json["results"]:
+        if provider.casefold() in i["provider_name"].casefold():
+            return i["provider_id"]
+
+    return "Provider not found"
+
 def getByGenre(data):
     genre = data["genre"]
+    runtime = data["runtime"]
+    stream = data["service"]
     genreID = getGenreID(genre)
+    providerID = getProviderID(stream)
 
     url = "https://api.themoviedb.org/3/discover/movie"
     payload = {
         "api_key": tmdb_key ,
         "language": "en-US",
         "sort_by": "popularity.desc",
-        "with_runtime.lte": 200,
-        "vote_average.gte": 7.5,
+        "with_runtime.lte": runtime,
+        "vote_average.gte": 7,
         "with_genres": genreID,
-        "with_original_language": "en"
+        "with_original_language": "en",
+        "with_watch_providers": providerID,
+        "watch_region": "US"
     }
 
     r = requests.get(url, params=payload)
@@ -34,7 +49,7 @@ def getByGenre(data):
 
     response = {"results": []}
     i = 0
-    while len(response["results"]) < 15:
+    while len(response["results"]) < 15 and i < len(json["results"]):
         movie_id = json["results"][i].get("id")
         key = tmdb_key 
         url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={key}"
@@ -42,7 +57,12 @@ def getByGenre(data):
         details = requests.get(url)
         det_json = details.json()
 
-        poster_path = "https://image.tmdb.org/t/p/original" + json["results"][i].get("poster_path")     
+        poster_path = json["results"][i].get("poster_path")
+        if poster_path == None:
+            i += 1
+            continue
+
+        poster_path = "https://image.tmdb.org/t/p/w200" + poster_path
 
         movie = {
             "title": json["results"][i].get("original_title"),
@@ -55,6 +75,7 @@ def getByGenre(data):
 
         response["results"].append(movie)
         i += 1
+
     return response
 
 def getStreamAvail(movie_id):
@@ -81,4 +102,28 @@ def getStreamAvail(movie_id):
         if platform not in response["results"]:
             response["results"].append(platform)
 
+    return response
+
+def streamRedirect(data):
+    id = data["movie_id"]
+    stream = data["service"]
+    
+    watchmode = f"https://watchmode.p.rapidapi.com/title/movie-{id}/sources/"
+
+    wm_headers = {
+        "regions": "US",
+        "X-RapidAPI-Key": stream_api_key,
+        "X-RapidAPI-Host": "watchmode.p.rapidapi.com"
+    }
+
+    wm_r = requests.get(watchmode, headers=wm_headers)
+    wm_json = wm_r.json()
+
+    response = {"link": ""}
+    if type(wm_json) is not dict:
+        for platform in range(len(wm_json)):
+            if stream.casefold() in wm_json[platform]["name"].casefold():
+                response["link"] = wm_json[platform]["web_url"]
+                break
+    
     return response
