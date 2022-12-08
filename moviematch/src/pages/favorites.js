@@ -1,6 +1,6 @@
 import '../styles/favorites.css';
 import Favnavbar from '../components/favnavbar';
-import MovieCard from '../components/movieCard';
+import FavmovieCard from '../components/favmovieCard';
 import { useEffect } from 'react'
 
 
