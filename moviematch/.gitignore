@@ -21,5 +21,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+*.db
 
 /backend/config.py
+/backend/.flask_session
