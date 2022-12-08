@@ -53,7 +53,7 @@ def getProviderID(provider):
         "Netflix": 8,
         "Hulu": 15,
         "Amazon Prime": 9,
-        "HBO MAX": 384,
+        "HBO Max": 384,
         "Disney+": 337,
         "AppleTV+": 350,
         "Paramount+": 531,
