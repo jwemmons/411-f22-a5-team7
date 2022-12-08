@@ -7,14 +7,11 @@ function Navbar() {
   function signIn() {
 
     fetch("http://127.0.0.1:4000/login").then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        window.location.replace(data.auth_url)
-
+      .then((response) => {
+        window.location.replace(response["url"])
       }).catch((error) => {
         console.log(error);
       })
-
   }
 
 
