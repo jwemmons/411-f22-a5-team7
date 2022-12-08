@@ -14,7 +14,7 @@ function MovieCard(movieData) {
 
         var movieService = document.getElementById("inputService").value;
     
-        fetch("http://127.0.0.1:4000/stream-redirect",
+        fetch("http://127.0.0.1:5000/stream-redirect",
           {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },

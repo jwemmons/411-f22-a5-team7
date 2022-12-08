@@ -6,18 +6,15 @@ function Navbar() {
 
   function signIn() {
 
-    fetch("http://127.0.0.1:4000/movies/login",
-      {
-        method: "GET",
-        headers: { 'Content-Type': 'application/json' }
-      }).then((response) => response.json())
+    fetch("http://127.0.0.1:5000/login").then((response) => response.json())
       .then((data) => {
-        console.log(data.results)
+        console.log(data)
+        window.open(data.auth_url)
 
       }).catch((error) => {
         console.log(error);
       })
-      
+
   }
 
 

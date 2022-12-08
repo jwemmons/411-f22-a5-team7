@@ -27,7 +27,7 @@ function Form() {
     var movieLength = document.getElementById("inputLength").value;
     var movieService = document.getElementById("inputService").value;
 
-    fetch("http://127.0.0.1:4000/movies/get_by_genre",
+    fetch("http://127.0.0.1:5000/movies/get_by_genre",
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
