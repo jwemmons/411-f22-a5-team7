@@ -5,24 +5,68 @@ stream_api_key=config.STREAM_API_KEY
 tmdb_key=config.TMDB_KEY
 
 def getGenreID(genre):
-    r = requests.get(f"https://api.themoviedb.org/3/genre/movie/list?api_key={tmdb_key}")
-    json = r.json()
+    # r = requests.get(f"https://api.themoviedb.org/3/genre/movie/list?api_key={tmdb_key}")
+    # json = r.json()
 
-    for i in json["genres"]:
-        if i["name"].casefold() == genre.casefold():
-            return i["id"] 
+    # for i in json["genres"]:
+    #     if i["name"].casefold() == genre.casefold():
+    #         return i["id"] 
 
-    return "Genre not found"
+    # return "Genre not found"
+    ids = {
+        "Action": 28,
+        "Adventure": 12,
+        "Animation": 16,
+        "Comedy": 35,
+        "Crime": 80,
+        "Documentary": 99,
+        "Drama": 18,
+        "Family": 10751,
+        "Fantasy": 14,
+        "History": 36,
+        "Horror": 27,
+        "Music": 10402,
+        "Mystery": 9648,
+        "Romance": 10749,
+        "Science Fiction": 878,
+        "TV Movie": 10770,
+        "Thriller": 53,
+        "War": 10752,
+        "Western": 37
+    }
+    
+    if genre in ids:
+        return ids[genre]
+    else:
+        return ""
 
 def getProviderID(provider):
-    r = requests.get(f"https://api.themoviedb.org/3/watch/providers/movie?api_key={tmdb_key}&watch_region=US")
-    r_json = r.json()
+    # r = requests.get(f"https://api.themoviedb.org/3/watch/providers/movie?api_key={tmdb_key}&watch_region=US")
+    # r_json = r.json()
 
-    for i in r_json["results"]:
-        if provider.casefold() in i["provider_name"].casefold():
-            return i["provider_id"]
+    # for i in r_json["results"]:
+    #     if provider.casefold() in i["provider_name"].casefold():
+    #         return i["provider_id"]
 
-    return "Provider not found"
+    # return "Provider not found"
+    ids = {
+        "Netflix": 8,
+        "Hulu": 15,
+        "Amazon Prime": 9,
+        "HBO MAX": 384,
+        "Disney+": 337,
+        "AppleTV+": 350,
+        "Paramount+": 531,
+        "Showtime": 37,
+        "Peacock Premium": 387,
+        "Vudu": 7,
+        "iTunes": 2,
+        "YouTube Premium": 188
+    }
+    if provider in ids:
+        return ids[provider]
+    else:
+        return ""
 
 def getByGenre(data):
     genre = data["genre"]
