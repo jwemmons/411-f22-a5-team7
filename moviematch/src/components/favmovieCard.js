@@ -1,5 +1,4 @@
 import '../styles/movie.css'
-import Heart from "react-heart";
 import { useEffect, useState } from 'react'
 
 
@@ -33,14 +32,8 @@ function MovieCard(movieData) {
     
       }
 
-    function onClick(e) {
-        if (disabled === false) {
-            setActive(true)
-            console.log(1)
-        }
-        else {
-            console.log(2)
-        }        
+    function deleteMovie() {
+         
      }
 
 
@@ -53,7 +46,7 @@ function MovieCard(movieData) {
         <div className='title'>{movie[0][0]}</div>
         <div>{movie[0][3]} min</div>
         <div>{movie[0][2]}</div>
-        <Heart isActive={active} disabled={disabled} onClick={() => {onClick(); setDisabled(true)}} style={{ height: 53, width: 36 }}/>
+        <button onClick={() => deleteMovie()}>Delete</button>
 
     </div>
   );
