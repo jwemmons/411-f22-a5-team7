@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import '../styles/form.css'
-import Movie from './MovieCard.js'
+import Movie from './movieCard.js'
 
 
 function Form() {

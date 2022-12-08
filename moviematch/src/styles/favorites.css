@@ -1,0 +1,11 @@
+.movieGrid {
+    margin: auto;
+    max-height: 40%;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-gap: 1em;
+}
+
+.favorites {
+    text-align: center;
+}

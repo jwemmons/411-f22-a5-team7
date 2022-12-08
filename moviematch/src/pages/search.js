@@ -1,6 +1,6 @@
 import '../styles/home.css';
-import Form from '../components/Form';
-import Searchnavbar from '../components/Searchnavbar';
+import Form from '../components/form';
+import Searchnavbar from '../components/searchnavbar';
 
 
 

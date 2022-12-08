@@ -1,7 +1,7 @@
 import '../styles/navbar.css'
 import logo from '../moviematch.png'
 
-function Navbar() {
+function Favnavbar() {
 
   const logout = () => {
     fetch("http://127.0.0.1:4000/logout")
@@ -13,8 +13,8 @@ function Navbar() {
     })
   }
 
-  const goFav = () => {
-    window.location.replace("http://localhost:3000/favorites")
+  const backSearch = () => {
+    window.location.replace("http://localhost:3000/search")
   }
 
   return (
@@ -28,7 +28,7 @@ function Navbar() {
         <div className='appTitle'>MovieMatch</div>
 
         <div>
-          <button className='favButton' onClick={() => goFav()}>Favorites</button>
+            <button className='searchButton' onClick={() => backSearch()}>Back to Search</button>
         </div>
 
         <div>
@@ -39,4 +39,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default Favnavbar;
