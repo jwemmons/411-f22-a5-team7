@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
 
 function MovieCard(movieData) {
 
-    const [active, setActive] = useState(false)
-    const [disabled, setDisabled] = useState(false)
     let movie = Object.values(movieData)
 
 
