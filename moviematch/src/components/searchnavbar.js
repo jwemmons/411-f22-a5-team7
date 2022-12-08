@@ -4,7 +4,7 @@ import logo from '../moviematch.png'
 function Navbar() {
 
   const logout = () => {
-    fetch("http://127.0.0.1:4000/logout")
+    fetch("http://127.0.0.1:5000/logout")
     .then((response) => response.json())
     .then((response) => {
       window.location.replace(response["url"])
