@@ -42,7 +42,8 @@ def login():
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         print('no valid token, need to sign-in with spotify')
         auth_url = auth_manager.get_authorize_url()
-        return f'<a href="{auth_url}">Sign in with Spotify</a>'
+        #return f'<a href="{auth_url}">Sign in with Spotify</a>'
+        return jsonify({'auth_url': auth_url})
     else:
         print('signed in successfully')
         sp = spotipy.Spotify(auth_manager=auth_manager)
