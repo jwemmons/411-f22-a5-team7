@@ -10,7 +10,11 @@ import config
 
 
 app = Flask(__name__)
-CORS(app) 
+CORS(
+    app, 
+    origins=["http://localhost:3000", "http:'//127.0.0.1:3000"], 
+    supports_credentials=True
+) 
 
 app.register_blueprint(movie_routes)
 
@@ -43,28 +47,31 @@ def login():
         print('no valid token, need to sign-in with spotify')
         auth_url = auth_manager.get_authorize_url()
         #return f'<a href="{auth_url}">Sign in with Spotify</a>'
-        return jsonify({'auth_url': auth_url})
-    else:
-        print('signed in successfully')
-        sp = spotipy.Spotify(auth_manager=auth_manager)
-        me = sp.me()
-        # if not(UserModel.query.filter_by(user_id=me['id']).first()):
-        #     user = UserModel(me['id'],me['display_name'],"{}")
-        #     UserModel.session.add(user)
-        #     UserModel.session.commit()
-        return jsonify({'data': 'success'})
+        print("got here")
+        return jsonify({"url": auth_url})
+        # return redirect(auth_url)
+    # else:
+    #     print('signed in successfully')
+    #     sp = spotipy.Spotify(auth_manager=auth_manager)
+    #     me = sp.me()
+    #     # if not(UserModel.query.filter_by(user_id=me['id']).first()):
+    #     #     user = UserModel(me['id'],me['display_name'],"{}")
+    #     #     UserModel.session.add(user)
+    #     #     UserModel.session.commit()
+    #     return jsonify({'data': 'success'})
 
 @app.route('/callback')
 def callback():
     code = request.args.get('code')
     session['code'] = code
-    new_url = '/login?code=' + code
+    # new_url = '/login?code=' + code
+    new_url = "http://localhost:3000/search"
     return redirect(new_url)
 
 @app.route('/logout')
 def logout():
     session.pop("token_info", None)
-    return redirect('/login')
+    return jsonify({'url': 'http://localhost:3000/home'})
 
 @app.route('/user/add_fav/<movie_id>')
 def add_fav(movie_id):
