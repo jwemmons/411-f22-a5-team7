@@ -13,7 +13,7 @@ function MovieCard(movieData) {
 
     function redirectMovie(movieID) {
 
-        var movieService = document.getElementById("inputService").value;
+        var movieService = movie[0][5];
     
         fetch("http://127.0.0.1:4000/stream-redirect",
           {
