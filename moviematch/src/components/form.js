@@ -27,8 +27,6 @@ function Form() {
 
   function fetchMovies(e) {
 
-    console.log(genreSelect)
-
     e.preventDefault();
 
     fetch("http://127.0.0.1:4000/movies/get_by_genre",
