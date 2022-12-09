@@ -63,3 +63,7 @@ input {
     grid-template-columns: auto auto auto auto auto;
     grid-gap: 1em;
 }
+
+hr {
+    margin-bottom: 3rem;
+}
