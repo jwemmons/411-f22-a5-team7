@@ -10,7 +10,6 @@ function MovieCard(movieData) {
     const [disabled, setDisabled] = useState(false)
     let movie = Object.values(movieData)
 
-
     function redirectMovie(movieID) {
 
         var movieService = movie[0][5];
@@ -37,10 +36,11 @@ function MovieCard(movieData) {
     function onClick(e) {
         if (disabled === false) {
             setActive(true)
-            fetch("http://127.0.0.1:4000/stream-redirect",
+            fetch("http://127.0.0.1:4000/user/add_fav",
           {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
             body: JSON.stringify({
               "title": movie[0][0],
               "poster_path": movie[0][1],
@@ -50,6 +50,7 @@ function MovieCard(movieData) {
               "service": movie[0][5]
             })
           }).then((response) => response.json())
+          .then((response) => console.log(response))
           .catch((error) => {
             console.log(error);
           })

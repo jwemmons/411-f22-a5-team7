@@ -3,14 +3,13 @@ import { useEffect, useState } from 'react'
 
 
 
-function MovieCard(movieData) {
+function FavmovieCard(movieData) {
 
     let movie = Object.values(movieData)
 
 
     function redirectMovie(movieID) {
 
-        var movieService = document.getElementById("inputService").value;
     
         fetch("http://127.0.0.1:4000/stream-redirect",
           {
@@ -19,7 +18,7 @@ function MovieCard(movieData) {
             credentials: "include",
             body: JSON.stringify({
               "movie_id": movieID,
-              "service": movieService
+              "service": movie[0][5]
             })
           }).then((response) => response.json())
           .then((data) => {
@@ -33,7 +32,7 @@ function MovieCard(movieData) {
 
     function deleteMovie() {
          
-     }
+    }
 
 
   return (
@@ -51,4 +50,4 @@ function MovieCard(movieData) {
   );
 }
 
-export default MovieCard;
+export default FavmovieCard;

@@ -24,7 +24,7 @@ def add_fav():
 def get_fav():
     user = UserModel.query.filter_by(user_id=0).first()
     favs = user.user_fav
-    return jsonify(favs)
+    return favs
 
 # @bp.route('/user/delete_fav/<movie_id>')
 # def delete_fav(movie_id):
