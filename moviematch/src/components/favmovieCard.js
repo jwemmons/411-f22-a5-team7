@@ -5,8 +5,6 @@ import { useEffect, useState } from 'react'
 
 function MovieCard(movieData) {
 
-    const [active, setActive] = useState(false)
-    const [disabled, setDisabled] = useState(false)
     let movie = Object.values(movieData)
 
 
@@ -18,6 +16,7 @@ function MovieCard(movieData) {
           {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
             body: JSON.stringify({
               "movie_id": movieID,
               "service": movieService

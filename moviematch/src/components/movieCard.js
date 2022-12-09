@@ -13,12 +13,13 @@ function MovieCard(movieData) {
 
     function redirectMovie(movieID) {
 
-        var movieService = document.getElementById("inputService").value;
+        var movieService = movie[0][5];
     
         fetch("http://127.0.0.1:4000/stream-redirect",
           {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
             body: JSON.stringify({
               "movie_id": movieID,
               "service": movieService
@@ -36,10 +37,25 @@ function MovieCard(movieData) {
     function onClick(e) {
         if (disabled === false) {
             setActive(true)
-            console.log(1)
+            fetch("http://127.0.0.1:4000/stream-redirect",
+          {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              "title": movie[0][0],
+              "poster_path": movie[0][1],
+              "rating": movie[0][2],
+              "runtime": movie[0][3],
+              "movie_id": movie[0][4],
+              "service": movie[0][5]
+            })
+          }).then((response) => response.json())
+          .catch((error) => {
+            console.log(error);
+          })
         }
         else {
-            console.log(2)
+            console.log("already added to favorites!")
         }        
      }
 
