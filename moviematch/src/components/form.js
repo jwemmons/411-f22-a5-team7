@@ -35,6 +35,7 @@ function Form() {
       {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
+        credentials: "include",
         body: JSON.stringify({
           "genre": genreSelect,
           "runtime": runtimeSelect,
@@ -68,7 +69,7 @@ function Form() {
     <div className="form-container">
       <form>
         <div className='form-content'>
-          <div className='formTitle'>Movie Preferences:</div>
+          <hr></hr>
           <div className='inputs'>
             <div>
             <FormControl sx={{ width: 200, height: 5}}>

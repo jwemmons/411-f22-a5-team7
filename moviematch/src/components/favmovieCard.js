@@ -16,6 +16,7 @@ function MovieCard(movieData) {
           {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },
+            credentials: "include",
             body: JSON.stringify({
               "movie_id": movieID,
               "service": movieService
