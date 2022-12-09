@@ -33,11 +33,15 @@ function Favorites() {
 
     useEffect(() => {
         var movieList = {}
-        for (var i = 0; i < favmovies.length; i++) {
-            movieList[favmovies[i].title] = [favmovies[i].poster_path, favmovies[i].rating, favmovies[i].runtime, favmovies[i].movie_id, favmovies[i].service]
+        if ((typeof(favmovies) !== 'undefined') && (favmovies.length !== null)) {
+
+            for (var i = 0; i < favmovies.length; i++) {
+                movieList[favmovies[i].title] = [favmovies[i].poster_path, favmovies[i].rating, favmovies[i].runtime, favmovies[i].movie_id, favmovies[i].service]
+            }
+            setFavorite(movieList)
+            console.log(favorite)
+
         }
-        setFavorite(movieList)
-        console.log(favorite)
     }, [favmovies])
 
 
