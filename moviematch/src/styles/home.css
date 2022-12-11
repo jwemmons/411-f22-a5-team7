@@ -1,11 +1,12 @@
 .App {
   text-align: center;
+  background-color: black;
+  max-height: 100%;
+
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+.App-logo {}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -13,15 +14,62 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+
+
+.block {
+
+
+  height: 4rem;
+  width: 100px;
+
+}
+
+.moviematchlogo {
+  height: auto;
+  max-width: 100%;
+
+}
+
+.welcometitle {
+
+  font-size: 70px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #553c9a, #b393d3);
+  text-align: center;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  margin-bottom: 18.1rem;
+
+
+}
+
+.button {
+
+
+  margin-top: 30px;
+  background-color: black;
+  align-content: center;
+  max-width: 100%;
+  height: 130px
+}
+
+.loginButton {
+  margin-top: 200px;
+  background-color: transparent;
+  text-align: center;
+
+}
+
+.textInstructions {
+  font-size: 39px;
+  font-weight: 600;
+  background-image: linear-gradient(to left, #553c9a, #b393d3);
+  text-align: center;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  position: relative;
 }
 
 .App-link {
@@ -32,6 +80,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
