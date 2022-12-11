@@ -2,10 +2,20 @@
     margin: auto;
     max-height: 40%;
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto;
     grid-gap: 1em;
+    margin-left: 4rem;
 }
 
 .favorites {
+
+
     text-align: center;
+
+}
+
+.titleC {
+    font-size: 2rem;
+    margin-bottom: 4rem;
+    margin-top: 1rem;
 }

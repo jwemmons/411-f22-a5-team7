@@ -48,7 +48,7 @@ function Favorites() {
     return (
         <div className="favorites">
             <Favnavbar></Favnavbar>
-            <div>Favorites</div>
+            <div className='titleC'>Favorites</div>
             <div className='movieGrid'>
             {favmovies && Object.entries(favorite).map(([key, value], i) =>
             <div key={i} className="movieOutput">
