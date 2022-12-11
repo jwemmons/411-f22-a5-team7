@@ -1,7 +1,7 @@
 import '../styles/home.css';
 import Navbar from '../components/navbar';
 import Login from '../components/Login';
-import logo from '../moviematch.png'
+import logo from '../logo.png'
 
 
 function Home() {
@@ -25,17 +25,25 @@ function Home() {
 
   return (
     <div className="App">
-      <div className="welcometitle"> Welcome to MovieMatch </div>
+
+      <div className='appContainer'>
+
+        <div className='titleContainer'>
+            <div className="welcometitle"> Welcome to MovieMatch </div>
+            <img src={logo} alt="moviematchlogo"/>
+
+        </div>
+            
+        <div className="textInstructions">Get Matched with your Perfect Film!</div>
+       
+              
+        <div className="button">
+            <button className='loginButton' onClick={() => signIn()} class="block">Login</button>
+        </div>
 
 
-      <div className="textInstructions">Movie magic - We Guarantee We'll Match You With Your Perfect Film</div>
-      <div className="textInstructions"> Click the Login Button Below to Get Started</div>
-      <div className="button">
-        <button className='loginButton' onClick={() => signIn()} class="block">Login</button>
 
       </div>
-
-
 
 
     </div>
