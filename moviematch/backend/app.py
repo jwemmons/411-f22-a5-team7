@@ -41,32 +41,13 @@ def login():
     cache_handler = spotipy.cache_handler.FlaskSessionCacheHandler(session)
     auth_manager = spotipy.oauth2.SpotifyOAuth(scope='user-read-email ', cache_handler=cache_handler,
                                                show_dialog=True, client_id=config.CLIENT_ID, client_secret=config.CLIENT_SECRET, redirect_uri=config.REDIRECT_URI)
-
-    # if request.args.get('code'):
-    #     print('code is in request.args')
-    #     auth_manager.get_access_token(request.args.get('code'))
-    #     return redirect('/login')
-
+                                               
     if not auth_manager.validate_token(cache_handler.get_cached_token()):
         print('no valid token, need to sign-in with spotify')
         auth_url = auth_manager.get_authorize_url()
-        #return f'<a href="{auth_url}">Sign in with Spotify</a>'
-        print("got here")
-
         return jsonify({"url": auth_url})
     else:
         return redirect("http://localhost:3000/search")
-
-        # return redirect(auth_url)
-    # else:
-    #     print('signed in successfully')
-    #     sp = spotipy.Spotify(auth_manager=auth_manager)
-    #     me = sp.me()
-    #     # if not(UserModel.query.filter_by(user_id=me['id']).first()):
-    #     #     user = UserModel(me['id'],me['display_name'],"{}")
-    #     #     UserModel.session.add(user)
-    #     #     UserModel.session.commit()
-    #     return jsonify({'data': 'success'})
 
 @app.route('/callback')
 @cross_origin(supports_credentials=True)
