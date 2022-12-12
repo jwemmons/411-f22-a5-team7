@@ -30,8 +30,19 @@ function FavmovieCard(movieData) {
     
       }
 
-    function deleteMovie() {
-         
+    function deleteMovie(movieID) {
+      fetch("http://127.0.0.1:4000/user/delete_fav/" + movieID,
+      {
+        method: "GET",
+        headers: { 'Content-Type': 'application/json' },
+        credentials: "include",
+      }).then((response) => response.json())
+      .then((data) => {
+        window.location.reload(false)
+
+      }).catch((error) => {
+        console.log(error);
+      })
     }
 
 
@@ -44,7 +55,7 @@ function FavmovieCard(movieData) {
         <div className='title'>{movie[0][0]}</div>
         <div>{movie[0][3]} min</div>
         <div>{movie[0][2]}</div>
-        <button onClick={() => deleteMovie()}>Delete</button>
+        <button onClick={() => deleteMovie(movie[0][4])}>Delete</button>
 
     </div>
   );
